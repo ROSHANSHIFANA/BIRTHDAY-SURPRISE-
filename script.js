@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const riddles = [
     { question: "What is your favorite thing?", answer: "briyani" },
     { question: "Who is most important to you?", answer: "appa" },
-    { question: "What do you want for this birthday?", answer: "a gift" }
+    { question: "What do you want for this birthday?", answer: "gift" }
 ];
 let currentRiddle = 0;
 
@@ -87,3 +87,4 @@ function startSlideshow() {
         }
     }, 3000);
 }
+
