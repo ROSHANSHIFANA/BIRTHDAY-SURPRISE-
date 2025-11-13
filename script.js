@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Create hearts in the background
     const heartsContainer = document.querySelector('.background-hearts');
     for (let i = 0; i < 30; i++) {
         const heart = document.createElement('div');
@@ -7,8 +8,27 @@ document.addEventListener('DOMContentLoaded', () => {
         heart.style.animationDelay = `${Math.random() * 10}s`;
         heartsContainer.appendChild(heart);
     }
+
+    // Attach button event listeners once DOM is loaded
+    const heartButton = document.getElementById('heart-button');
+    if (heartButton) {
+        heartButton.addEventListener('click', () => {
+            document.getElementById('message-container').classList.add('hidden');
+            document.getElementById('slideshow-container').classList.remove('hidden');
+            startSlideshow();
+        });
+    }
+
+    const blastButton = document.getElementById('birthday-blast-button');
+    if (blastButton) {
+        blastButton.addEventListener('click', () => {
+            document.getElementById('slideshow-container').classList.add('hidden');
+            document.getElementById('birthday-blast-container').classList.remove('hidden');
+        });
+    }
 });
 
+// FIRST: Define the riddles and image slideshow
 const riddles = [
     { question: "What is your favorite thing?", answer: "briyani" },
     { question: "Who is most important to you?", answer: "appa" },
@@ -17,8 +37,7 @@ const riddles = [
 let currentRiddle = 0;
 
 function checkRiddle() {
-    const answer = document.getElementById('riddle-answer').value.toLowerCase();
-    // Only check riddles in range, to avoid 'undefined'
+    const answer = document.getElementById('riddle-answer').value.trim().toLowerCase();
     if (currentRiddle < riddles.length && answer.includes(riddles[currentRiddle].answer)) {
         currentRiddle++;
         if (currentRiddle < riddles.length) {
@@ -28,19 +47,14 @@ function checkRiddle() {
             document.getElementById('riddle-container').classList.add('hidden');
             document.getElementById('message-container').classList.remove('hidden');
             setTimeout(() => {
-                document.getElementById('heart-button').classList.remove('hidden');
-            }, 20000); // Show button after 20 seconds
+                const heartButton = document.getElementById('heart-button');
+                if (heartButton) heartButton.classList.remove('hidden');
+            }, 20000); // Button shows after 20 seconds
         }
     } else if (currentRiddle < riddles.length) {
         alert("Not quite! Try again.");
     }
 }
-
-document.getElementById('heart-button').addEventListener('click', () => {
-    document.getElementById('message-container').classList.add('hidden');
-    document.getElementById('slideshow-container').classList.remove('hidden');
-    startSlideshow();
-});
 
 const images = [
     'IMG-20251106-WA0020.jpg',
@@ -55,24 +69,22 @@ const images = [
     'IMG-20251106-WA0029.jpg'
 ];
 let currentImage = 0;
+let interval = null;
 
 function startSlideshow() {
+    currentImage = 0;
     const slideshow = document.querySelector('.slideshow');
+    if (!slideshow) return;
     slideshow.style.backgroundImage = `url('${images[currentImage]}')`;
 
-    const interval = setInterval(() => {
+    interval = setInterval(() => {
         currentImage++;
         if (currentImage >= images.length) {
             clearInterval(interval);
-            document.getElementById('birthday-blast-button').classList.remove('hidden');
+            const blastButton = document.getElementById('birthday-blast-button');
+            if (blastButton) blastButton.classList.remove('hidden');
         } else {
             slideshow.style.backgroundImage = `url('${images[currentImage]}')`;
         }
-    }, 3000); // Change image every 3 seconds
+    }, 3000); // 3 seconds per image
 }
-
-document.getElementById('birthday-blast-button').addEventListener('click', () => {
-    document.getElementById('slideshow-container').classList.add('hidden');
-    document.getElementById('birthday-blast-container').classList.remove('hidden');
-    // Add fireworks or animations here if desired
-});
