@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Create hearts in the background
+    // Create moving hearts in the background
     const heartsContainer = document.querySelector('.background-hearts');
     for (let i = 0; i < 30; i++) {
         const heart = document.createElement('div');
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         heartsContainer.appendChild(heart);
     }
 
-    // Attach button event listeners once DOM is loaded
+    // Bind event listeners after DOM is ready
     const heartButton = document.getElementById('heart-button');
     if (heartButton) {
         heartButton.addEventListener('click', () => {
@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// FIRST: Define the riddles and image slideshow
 const riddles = [
     { question: "What is your favorite thing?", answer: "briyani" },
     { question: "Who is most important to you?", answer: "appa" },
@@ -49,7 +48,7 @@ function checkRiddle() {
             setTimeout(() => {
                 const heartButton = document.getElementById('heart-button');
                 if (heartButton) heartButton.classList.remove('hidden');
-            }, 20000); // Button shows after 20 seconds
+            }, 20000); // Show button after 20 seconds
         }
     } else if (currentRiddle < riddles.length) {
         alert("Not quite! Try again.");
@@ -86,5 +85,5 @@ function startSlideshow() {
         } else {
             slideshow.style.backgroundImage = `url('${images[currentImage]}')`;
         }
-    }, 3000); // 3 seconds per image
+    }, 3000);
 }
